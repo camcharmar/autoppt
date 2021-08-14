@@ -89,3 +89,21 @@ export const getDimensions = (image, maxHeight, maxWidth) => {
 
     return ([5, 6, 7, 8]).includes(orientation) ? {height: dimensions.width, width: dimensions.height} : dimensions;
 }
+
+export const getRotationFromExif = (exif) => {
+    switch(exif) {
+      case 3:
+      case 4:
+        return 180;
+      case 5:
+      case 6:
+        return 90;
+      case 7:
+      case 8:
+        return 270;
+      case 1:
+      case 2:
+      default:
+        return 0;
+    }
+  }
