@@ -59,6 +59,7 @@ export const getImageMeta = (file) => {
         height: img.height,
         width: img.width,
         orientation: await getOrientation(file),
+        contain: true
       });
       fileReader.readAsDataURL(file);
     });
@@ -75,12 +76,17 @@ export const getDimensions = (image, maxHeight, maxWidth) => {
             height: maxHeight,
             width: maxWidth,
         }
-    } else if (currentAspect > maxAspect) {
+    }
+    else if (
+        (currentAspect > maxAspect && image.contain) ||
+        (currentAspect < maxAspect && !image.contain)
+    ) {
         dimensions = {
             height: (maxWidth * 1.0 / width) * height,
             width: maxWidth,
         }
-    } else {
+    }
+    else {
         dimensions = {
             height: maxHeight,
             width: (maxHeight * 1.0 / height) * width,

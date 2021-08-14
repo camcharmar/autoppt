@@ -18,13 +18,18 @@ function App() {
   },
   []);
 
+  const handleRemoveIndex = (index) => setImages(currentImages => [...currentImages.slice(0, index), ...currentImages.slice(index+1)]);
+  const handleToggleContainIndex = (index) => setImages(currentImages => currentImages.map((image, idx) => idx === index ? {...image, contain: !image.contain} : image));
+
   const reset = () => setImages([]);
 
   const submit = () => {
     const presentation = new pttxgen();
     images.forEach(image => {
       const dimensions = getDimensions(image, MAX_HEIGHT, MAX_WIDTH);
-      presentation.addSlide().addImage({
+      const slide = presentation.addSlide();
+      slide.background = {color: '000000'};
+      slide.addImage({
         data: image.data,
         x: (MAX_WIDTH - dimensions.width) / 2.0,
         y: (MAX_HEIGHT - dimensions.height) / 2.0,
@@ -38,10 +43,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
         {!!images.length ?
           <>
-            <FileList files={images} />
+            <FileList files={images} handleRemove={handleRemoveIndex} handleToggleContain={handleToggleContainIndex}/>
             <div style={{
               position: "relative",
               display: 'flex',
@@ -64,7 +68,6 @@ function App() {
         :
           <FileDrop onDrop={handleDrop} label="Drop images here or click to select images"/>
         }
-      </header>
     </div>
   );
 }
