@@ -5,16 +5,20 @@ import React, {useCallback, useState} from 'react';
 import pttxgen from 'pptxgenjs';
 import { getDimensions, getImageMeta, getRotationFromExif } from './utils/imageMeta';
 import { BigButton } from './components/BigButton';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
 
 function App() {
   const [images, setImages] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const handleDrop = useCallback(async (acceptedImages) => {
+    setLoading(true);
     const newImages = await Promise.all(acceptedImages.map(image => getImageMeta(image)));
     setImages(currentImages => [...currentImages, ...newImages])
+    setLoading(false);
   },
   []);
 
@@ -24,21 +28,27 @@ function App() {
   const reset = () => setImages([]);
 
   const submit = () => {
-    const presentation = new pttxgen();
-    images.forEach(image => {
-      const dimensions = getDimensions(image, MAX_HEIGHT, MAX_WIDTH);
-      const slide = presentation.addSlide();
-      slide.background = {color: '000000'};
-      slide.addImage({
-        data: image.data,
-        x: (MAX_WIDTH - dimensions.width) / 2.0,
-        y: (MAX_HEIGHT - dimensions.height) / 2.0,
-        h: dimensions.height,
-        w: dimensions.width,
-        rotate: getRotationFromExif(image.orientation)
+    setLoading(true);
+    setTimeout(() => {
+      const presentation = new pttxgen();
+      images.forEach(image => {
+        const dimensions = getDimensions(image, MAX_HEIGHT, MAX_WIDTH);
+        const slide = presentation.addSlide();
+        slide.background = {color: '000000'};
+        slide.addImage({
+          data: image.data,
+          x: (MAX_WIDTH - dimensions.width) / 2.0,
+          y: (MAX_HEIGHT - dimensions.height) / 2.0,
+          h: dimensions.height,
+          w: dimensions.width,
+          rotate: getRotationFromExif(image.orientation)
+        });
       });
-    });
-    setTimeout(() => presentation.writeFile({fileName: 'FromImages.pptx'}), 1000);
+
+      presentation.writeFile({fileName: 'FromImages.pptx'}).then(() => {
+        setLoading(false);
+      });
+    }, 0);
   };
 
   return (
@@ -68,6 +78,12 @@ function App() {
         :
           <FileDrop onDrop={handleDrop} label="Drop images here or click to select images"/>
         }
+        
+    {isLoading && 
+      <div id="loader">
+        <div><BiLoaderAlt fontSize="20vw"/></div>
+      </div>
+    }
     </div>
   );
 }
