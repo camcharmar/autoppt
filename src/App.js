@@ -55,7 +55,7 @@ function App() {
     <div className="App">
         {!!images.length ?
           <>
-            <FileList files={images} handleRemove={handleRemoveIndex} handleToggleContain={handleToggleContainIndex}/>
+            <FileList files={images} setFiles={setImages} handleRemove={handleRemoveIndex} handleToggleContain={handleToggleContainIndex}/>
             <div style={{
               position: "relative",
               display: 'flex',

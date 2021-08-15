@@ -32,7 +32,8 @@ export const FileListElement = ({file, onRemove, onToggleContain}) => (
         background: 'black',
         borderRadius: '10px',
         margin: '5px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        cursor: 'move'
     }}>
         <img src={file.data} alt="Uploading" style={{
             height: "100%",

@@ -1,12 +1,14 @@
 import React from 'react';
 import { FileListElement } from './FileListElement';
+import { ReactSortable } from 'react-sortablejs';
 
-export const FileList = ({files, handleRemove, handleToggleContain, onReorder}) => (
-    <div style={{
+export const FileList = ({files, setFiles, handleRemove, handleToggleContain}) => (
+    <ReactSortable list={files} setList={setFiles} style={{
+        width: '100%',
         display: 'flex',
         flexFlow: 'row wrap',
-        alignItems: 'stretch',
         justifyContent: 'center',
+        alignItems: 'center',
     }}>
         {!!files.length && files.map((file, index) => 
             <FileListElement 
@@ -16,5 +18,5 @@ export const FileList = ({files, handleRemove, handleToggleContain, onReorder}) 
                 onToggleContain={() => handleToggleContain(index)}
             />
         )}
-    </div>
+    </ReactSortable>
 );
