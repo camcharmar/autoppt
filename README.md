@@ -1,6 +1,8 @@
 # AutoPPT
 
-Create a powerpoint from a set of images, made for my friend Justin but he said you can use it too.
+Create a powerpoint from a set of images.
+
+Made for my friend Justin but he said you can use it too.
 
 ## Using
 
