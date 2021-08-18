@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BiCollapse, BiExpand, BiTrash} from 'react-icons/bi'
 
 const ImageButton = ({style, onClick, children}) => (
@@ -21,9 +21,7 @@ const ImageButton = ({style, onClick, children}) => (
     </div>
 )
 
-export const SortableImage = ({file, onRemove, onToggleContain}) => {
-    useEffect(() => console.log('image render'));
-    return (
+export const SortableImage = React.memo(({image, onRemove, onToggleContain}) => (
     <div style={{
         position: 'relative',
         display: 'flex',
@@ -37,17 +35,17 @@ export const SortableImage = ({file, onRemove, onToggleContain}) => {
         overflow: 'hidden',
         cursor: 'move'
     }}>
-        <img src={file.data} alt="Uploading" style={{
+        <img src={image.data} alt="Uploading" style={{
             height: "100%",
             width: "100%",
-            objectFit: file.contain ? 'contain' : 'cover',
+            objectFit: image.contain ? 'contain' : 'cover',
         }}/>
-        <ImageButton onClick={() => onRemove(file.id)} style={{top: 0, right: 0}}>
+        <ImageButton onClick={() => onRemove(image.id)} style={{top: 0, right: 0}}>
             <BiTrash />
         </ImageButton>
-        <ImageButton onClick={() => onToggleContain(file.id)} style={{top: 0, left: 0}}>
-            {file.contain ? <BiExpand /> : <BiCollapse />}
+        <ImageButton onClick={() => onToggleContain(image.id)} style={{top: 0, left: 0}}>
+            {image.contain ? <BiExpand /> : <BiCollapse />}
         </ImageButton>
         
     </div>
-)}
+));

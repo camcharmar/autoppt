@@ -72,7 +72,7 @@ function App() {
                 {!!images.length && images.map((image) => 
                     <SortableImage 
                         key={image.id}
-                        file={image} 
+                        image={image}
                         onRemove={handleRemoveId} 
                         onToggleContain={handleToggleContainId}
                     />
