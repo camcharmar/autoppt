@@ -1,11 +1,14 @@
 import './App.css';
 import { FileDrop } from './components/FileDrop';
-import { FileList } from './components/FileList';
-import React, {useCallback, useState} from 'react';
+import { SortableImage } from './components/SortableImage';
+import React, { useCallback, useState } from 'react';
 import pttxgen from 'pptxgenjs';
-import { getDimensions, getImageMeta, getRotationFromExif } from './utils/imageMeta';
 import { BigButton } from './components/BigButton';
-import { BiLoaderAlt } from 'react-icons/bi';
+import { getImageMeta } from './utils/getImageMeta';
+import { getRotationFromExif } from './utils/getRotationFromExif';
+import { getImageResizeDimensions } from './utils/getImageResizeDimensions';
+import { Loader } from './components/Loader';
+import { ReactSortable } from 'react-sortablejs';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
@@ -14,16 +17,20 @@ function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const handleDrop = useCallback(async (acceptedImages) => {
+  const handleAddFiles = useCallback((async (acceptedImages) => {
     setLoading(true);
-    const newImages = await Promise.all(acceptedImages.map(image => getImageMeta(image)));
+    const newImages = await Promise.all(acceptedImages.map(getImageMeta));
     setImages(currentImages => [...currentImages, ...newImages])
     setLoading(false);
-  },
-  []);
+  }), []);
 
-  const handleRemoveIndex = (index) => setImages(currentImages => [...currentImages.slice(0, index), ...currentImages.slice(index+1)]);
-  const handleToggleContainIndex = (index) => setImages(currentImages => currentImages.map((image, idx) => idx === index ? {...image, contain: !image.contain} : image));
+  const handleRemoveId = useCallback((id) => setImages(
+    currentImages => currentImages.filter((image) => image.id !== id)
+  ), []);
+
+  const handleToggleContainId = useCallback((id) => setImages(
+    currentImages => currentImages.map((image) => image.id === id ? {...image, contain: !image.contain} : image)
+  ), []);
 
   const reset = () => setImages([]);
 
@@ -32,7 +39,7 @@ function App() {
     setTimeout(() => {
       const presentation = new pttxgen();
       images.forEach(image => {
-        const dimensions = getDimensions(image, MAX_HEIGHT, MAX_WIDTH);
+        const dimensions = getImageResizeDimensions(image, MAX_HEIGHT, MAX_WIDTH);
         const slide = presentation.addSlide();
         slide.background = {color: '000000'};
         slide.addImage({
@@ -55,7 +62,22 @@ function App() {
     <div className="App">
         {!!images.length ?
           <>
-            <FileList files={images} setFiles={setImages} handleRemove={handleRemoveIndex} handleToggleContain={handleToggleContainIndex}/>
+            <ReactSortable list={images} setList={setImages} style={{
+                width: '100%',
+                display: 'flex',
+                flexFlow: 'row wrap',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                {!!images.length && images.map((image) => 
+                    <SortableImage 
+                        key={image.id}
+                        image={image}
+                        onRemove={handleRemoveId} 
+                        onToggleContain={handleToggleContainId}
+                    />
+                )}
+            </ReactSortable>
             <div style={{
               position: "relative",
               display: 'flex',
@@ -69,21 +91,17 @@ function App() {
               <BigButton onClick={reset} color="white" backgroundColor="slategrey">
                 Clear All
               </BigButton>
-              <FileDrop onDrop={handleDrop} label="Add more images"/>
+              <FileDrop onDrop={handleAddFiles} label="Add more images"/>
               <BigButton onClick={submit} color="white" backgroundColor="dodgerblue">
                 Export as PPT
               </BigButton>
             </div>
           </>
         :
-          <FileDrop onDrop={handleDrop} label="Drop images here or click to select images"/>
+          <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
         }
         
-    {isLoading && 
-      <div id="loader">
-        <div><BiLoaderAlt fontSize="20vw"/></div>
-      </div>
-    }
+      {isLoading &&  <Loader />}
     </div>
   );
 }
