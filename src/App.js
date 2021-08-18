@@ -1,13 +1,14 @@
 import './App.css';
 import { FileDrop } from './components/FileDrop';
-import { FileList } from './components/FileList';
-import React, {useState} from 'react';
+import { SortableImage } from './components/SortableImage';
+import React, { useCallback, useState } from 'react';
 import pttxgen from 'pptxgenjs';
 import { BigButton } from './components/BigButton';
 import { getImageMeta } from './utils/getImageMeta';
 import { getRotationFromExif } from './utils/getRotationFromExif';
 import { getImageResizeDimensions } from './utils/getImageResizeDimensions';
 import { Loader } from './components/Loader';
+import { ReactSortable } from 'react-sortablejs';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
@@ -16,20 +17,20 @@ function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const handleAddFiles = (async (acceptedImages) => {
+  const handleAddFiles = useCallback((async (acceptedImages) => {
     setLoading(true);
-    const newImages = await Promise.all(acceptedImages.map(image => getImageMeta(image)));
+    const newImages = await Promise.all(acceptedImages.map(getImageMeta));
     setImages(currentImages => [...currentImages, ...newImages])
     setLoading(false);
-  });
+  }), []);
 
-  const handleRemoveIndex = (index) => setImages(
-    currentImages => currentImages.filter((_, idx) => idx !== index)
-  );
+  const handleRemoveId = useCallback((id) => setImages(
+    currentImages => currentImages.filter((image) => image.id !== id)
+  ), []);
 
-  const handleToggleContainIndex = (index) => setImages(
-    currentImages => currentImages.map((image, idx) => idx === index ? {...image, contain: !image.contain} : image)
-  );
+  const handleToggleContainId = useCallback((id) => setImages(
+    currentImages => currentImages.map((image) => image.id === id ? {...image, contain: !image.contain} : image)
+  ), []);
 
   const reset = () => setImages([]);
 
@@ -61,7 +62,22 @@ function App() {
     <div className="App">
         {!!images.length ?
           <>
-            <FileList files={images} setFiles={setImages} handleRemove={handleRemoveIndex} handleToggleContain={handleToggleContainIndex}/>
+            <ReactSortable list={images} setList={setImages} style={{
+                width: '100%',
+                display: 'flex',
+                flexFlow: 'row wrap',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                {!!images.length && images.map((image) => 
+                    <SortableImage 
+                        key={image.id}
+                        file={image} 
+                        onRemove={handleRemoveId} 
+                        onToggleContain={handleToggleContainId}
+                    />
+                )}
+            </ReactSortable>
             <div style={{
               position: "relative",
               display: 'flex',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BiCollapse, BiExpand, BiTrash} from 'react-icons/bi'
 
 const ImageButton = ({style, onClick, children}) => (
@@ -21,7 +21,9 @@ const ImageButton = ({style, onClick, children}) => (
     </div>
 )
 
-export const FileListElement = ({file, onRemove, onToggleContain}) => (
+export const SortableImage = ({file, onRemove, onToggleContain}) => {
+    useEffect(() => console.log('image render'));
+    return (
     <div style={{
         position: 'relative',
         display: 'flex',
@@ -40,12 +42,12 @@ export const FileListElement = ({file, onRemove, onToggleContain}) => (
             width: "100%",
             objectFit: file.contain ? 'contain' : 'cover',
         }}/>
-        <ImageButton onClick={onRemove} style={{top: 0, right: 0}}>
+        <ImageButton onClick={() => onRemove(file.id)} style={{top: 0, right: 0}}>
             <BiTrash />
         </ImageButton>
-        <ImageButton onClick={onToggleContain} style={{top: 0, left: 0}}>
+        <ImageButton onClick={() => onToggleContain(file.id)} style={{top: 0, left: 0}}>
             {file.contain ? <BiExpand /> : <BiCollapse />}
         </ImageButton>
         
     </div>
-)
+)}
