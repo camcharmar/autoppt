@@ -9,6 +9,7 @@ import { getRotationFromExif } from './utils/getRotationFromExif';
 import { getImageResizeDimensions } from './utils/getImageResizeDimensions';
 import { Loader } from './components/Loader';
 import { ReactSortable } from 'react-sortablejs';
+import { PageHeader } from './components/PageHeader';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
@@ -60,49 +61,53 @@ function App() {
 
   return (
     <div className="App">
-        {!!images.length ?
-          <>
-            <ReactSortable list={images} setList={setImages} style={{
-                width: '100%',
+        <PageHeader />
+          {!!images.length ?
+            <div style={{marginTop: '130px'}}>
+              <ReactSortable list={images} setList={setImages} style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexFlow: 'row wrap',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+              }}>
+                  {!!images.length && images.map((image) => 
+                      <SortableImage 
+                          key={image.id}
+                          image={image}
+                          onRemove={handleRemoveId} 
+                          onToggleContain={handleToggleContainId}
+                      />
+                  )}
+              </ReactSortable>
+              <div style={{
+                position: "relative",
                 display: 'flex',
-                flexFlow: 'row wrap',
-                justifyContent: 'center',
+                flexFlow: 'row nowrap',
                 alignItems: 'center',
-            }}>
-                {!!images.length && images.map((image) => 
-                    <SortableImage 
-                        key={image.id}
-                        image={image}
-                        onRemove={handleRemoveId} 
-                        onToggleContain={handleToggleContainId}
-                    />
-                )}
-            </ReactSortable>
-            <div style={{
-              position: "relative",
-              display: 'flex',
-              flexFlow: 'row nowrap',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '90vw',
-              margin: '30px',
-              height: "90px",
-            }}>
-              <BigButton onClick={reset} color="white" backgroundColor="slategrey">
-                Clear All
-              </BigButton>
-              <FileDrop onDrop={handleAddFiles} label="Add more images"/>
-              <BigButton onClick={submit} color="white" backgroundColor="dodgerblue">
-                Export as PPT
-              </BigButton>
+                justifyContent: 'space-between',
+                width: '90vw',
+                margin: '30px',
+                height: "90px",
+              }}>
+                <BigButton onClick={reset} color="white" backgroundColor="slategrey">
+                  Clear All
+                </BigButton>
+                <FileDrop onDrop={handleAddFiles} label="Add more images"/>
+                <BigButton onClick={submit} color="white" backgroundColor="dodgerblue">
+                  Export as PPT
+                </BigButton>
+              </div>
             </div>
+          :
+          <>
+            <p style={{margin: '0 50px 125px 50px', maxWidth: '900px'}}>Easily create powerpoint presentations from any number of images. Just upload, order,&nbsp;and&nbsp;export!</p>
+            <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
           </>
-        :
-          <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
-        }
-        
-      {isLoading &&  <Loader />}
-    </div>
+          }
+          
+        {isLoading &&  <Loader />}
+      </div>
   );
 }
 
