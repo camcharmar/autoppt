@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.css": "/autoppt/static/css/main.ade5fcbf.chunk.css",
-    "main.js": "/autoppt/static/js/main.0ac5f67f.chunk.js",
-    "runtime-main.js": "/autoppt/static/js/runtime-main.b73570ef.js",
-    "static/js/2.aad79dca.chunk.js": "/autoppt/static/js/2.aad79dca.chunk.js",
-    "static/js/3.79882c5b.chunk.js": "/autoppt/static/js/3.79882c5b.chunk.js",
+    "main.css": "/autoppt/static/css/main.fb5506e9.chunk.css",
+    "main.js": "/autoppt/static/js/main.612cc516.chunk.js",
+    "runtime-main.js": "/autoppt/static/js/runtime-main.cf5e23cd.js",
+    "static/js/2.90a1b17a.chunk.js": "/autoppt/static/js/2.90a1b17a.chunk.js",
+    "static/js/3.ca7787bc.chunk.js": "/autoppt/static/js/3.ca7787bc.chunk.js",
     "index.html": "/autoppt/index.html",
-    "static/js/2.aad79dca.chunk.js.LICENSE.txt": "/autoppt/static/js/2.aad79dca.chunk.js.LICENSE.txt"
+    "static/js/2.90a1b17a.chunk.js.LICENSE.txt": "/autoppt/static/js/2.90a1b17a.chunk.js.LICENSE.txt",
+    "static/media/logo.ddec33c2.png": "/autoppt/static/media/logo.ddec33c2.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.b73570ef.js",
-    "static/js/2.aad79dca.chunk.js",
-    "static/css/main.ade5fcbf.chunk.css",
-    "static/js/main.0ac5f67f.chunk.js"
+    "static/js/runtime-main.cf5e23cd.js",
+    "static/js/2.90a1b17a.chunk.js",
+    "static/css/main.fb5506e9.chunk.css",
+    "static/js/main.612cc516.chunk.js"
   ]
 }
