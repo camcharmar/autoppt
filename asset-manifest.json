@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/autoppt/static/css/main.fb5506e9.chunk.css",
+    "main.css": "/autoppt/static/css/main.e823e96c.chunk.css",
     "main.js": "/autoppt/static/js/main.612cc516.chunk.js",
     "runtime-main.js": "/autoppt/static/js/runtime-main.cf5e23cd.js",
     "static/js/2.90a1b17a.chunk.js": "/autoppt/static/js/2.90a1b17a.chunk.js",
@@ -12,7 +12,7 @@
   "entrypoints": [
     "static/js/runtime-main.cf5e23cd.js",
     "static/js/2.90a1b17a.chunk.js",
-    "static/css/main.fb5506e9.chunk.css",
+    "static/css/main.e823e96c.chunk.css",
     "static/js/main.612cc516.chunk.js"
   ]
 }
