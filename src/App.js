@@ -10,6 +10,7 @@ import { getImageResizeDimensions } from './utils/getImageResizeDimensions';
 import { Loader } from './components/Loader';
 import { ReactSortable } from 'react-sortablejs';
 import { PageHeader } from './components/PageHeader';
+import { BiAddToQueue, BiDownload, BiEditAlt } from 'react-icons/bi';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
@@ -95,16 +96,46 @@ function App() {
                 </BigButton>
                 <FileDrop onDrop={handleAddFiles} label="Add more images"/>
                 <BigButton onClick={submit} color="white" backgroundColor="dodgerblue">
-                  Export as PPT
+                  Export
                 </BigButton>
               </div>
             </div>
           :
           <>
-            <p style={{margin: '50px', maxWidth: '900px'}}>Easily create powerpoint presentations from any number of images. Just upload, order,&nbsp;and&nbsp;export!</p>
+            <h1>Free Powerpoint Generator</h1>
+            <p style={{margin: '30px', maxWidth: '900px', fontWeight: 300}}>Easily create powerpoint presentations from any number of images. Just upload, order,&nbsp;and&nbsp;export!</p>
             <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
           </>
           }
+        <div className="how-to">
+          <h2>How it works</h2>
+          <div style={{
+            width: '100%',
+            textAlign: 'left',
+          }}>
+            <h3>Upload Images</h3>
+            <div className="how-to-group">
+              <div className="group-icon"><BiAddToQueue/></div>
+              <p>
+                Upload images (jpeg, png, or gif) or a folder of images, which will be added as individual slides in a powerpoint presentation.
+              </p>
+            </div>
+            <h3>Customize Presentation</h3>
+            <div className="how-to-group">
+              <div className="group-icon"><BiEditAlt /></div>
+              <p>
+                Reorder slides, remove and upload more images, and even set whether the image should fit within or fill the enitre slide.
+              </p>
+            </div>
+            <h3>Export to .ppt</h3>
+            <div className="how-to-group">
+              <div className="group-icon"><BiDownload /></div>
+              <p>
+                Once finished, just click Export and the powerpoint will be automatically downloaded with your formatted images. Easy!
+              </p>
+            </div>
+          </div>
+        </div>
           
         {isLoading &&  <Loader />}
       </div>

@@ -49,3 +49,36 @@ div#loader :first-child {
   box-sizing: border-box;
   border: 2px dashed white;
 }
+
+.how-to {
+  padding: 50px;
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+}
+
+.how-to-group {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+
+.how-to-group p {
+  margin-top: 0;
+}
+
+.group-icon {
+  padding: 15px;
+}
+
+.group-icon svg {
+  width: 45px;
+  height: 45px;
+}
+
+@media only screen and (max-width: 550px) {
+  .how-to {
+    padding: 10px;
+  }
+}
