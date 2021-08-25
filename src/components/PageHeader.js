@@ -7,8 +7,6 @@ export const PageHeader = () => (
             boxSizing: 'border-box',
             display: 'flex',
             padding: '25px',
-            position: 'absolute',
-            top: 0,
             width: '100vw',
             alignItems: 'center'
         }}
@@ -16,14 +14,11 @@ export const PageHeader = () => (
         <img 
             src={logo}
             alt="AutoPPT Logo"
-            style={{
-                maxWidth: "80px",
-                width: '20vw',
-            }}
+            style={{width: '50px'}}
         />
         <span
             style={{
-                fontSize: '3rem',
+                fontSize: '2.25rem',
                 marginLeft: '15px'
             }}
         >AutoPPT</span>

@@ -63,7 +63,7 @@ function App() {
     <div className="App">
         <PageHeader />
           {!!images.length ?
-            <div style={{marginTop: '130px'}}>
+            <div>
               <ReactSortable list={images} setList={setImages} style={{
                   width: '100%',
                   display: 'flex',
@@ -101,7 +101,7 @@ function App() {
             </div>
           :
           <>
-            <p style={{margin: '0 50px 125px 50px', maxWidth: '900px'}}>Easily create powerpoint presentations from any number of images. Just upload, order,&nbsp;and&nbsp;export!</p>
+            <p style={{margin: '50px', maxWidth: '900px'}}>Easily create powerpoint presentations from any number of images. Just upload, order,&nbsp;and&nbsp;export!</p>
             <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
           </>
           }
