@@ -11,6 +11,7 @@ import { Loader } from './components/Loader';
 import { ReactSortable } from 'react-sortablejs';
 import { PageHeader } from './components/PageHeader';
 import { BiAddToQueue, BiDownload, BiEditAlt } from 'react-icons/bi';
+import { Leaderboard1 } from './components/ads/Leaderboard1';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
@@ -107,6 +108,7 @@ function App() {
             <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
           </>
           }
+        <Leaderboard1 />
         <div className="how-to">
           <h2>How it works</h2>
           <div style={{
