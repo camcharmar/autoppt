@@ -11,7 +11,6 @@ import { Loader } from './components/Loader';
 import { ReactSortable } from 'react-sortablejs';
 import { PageHeader } from './components/PageHeader';
 import { BiAddToQueue, BiDownload, BiEditAlt } from 'react-icons/bi';
-import { Leaderboard1 } from './components/ads/Leaderboard1';
 
 const MAX_HEIGHT = 5.625;
 const MAX_WIDTH = 10.0;
