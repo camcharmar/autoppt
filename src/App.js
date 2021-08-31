@@ -108,7 +108,6 @@ function App() {
             <FileDrop onDrop={handleAddFiles} label="Drop images here or click to select images"/>
           </>
           }
-        <Leaderboard1 />
         <div className="how-to">
           <h2>How it works</h2>
           <div style={{
