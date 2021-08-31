@@ -1,14 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const Leaderboard1 = () => {
+    const div = useRef(null);
     useEffect(() => {
-        try {
-            window._mNHandle.queue.push(function (){
-                window._mNDetails.loadTag("345822648", "728x90", "345822648");
-            });
-        }
-        catch (error) {}
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.innerHTML = `atOptions = {
+            'key' : 'e9e525fcb9df99bce127b9be7b16b177',
+            'format' : 'iframe',
+            'height' : 90,
+            'width' : 728,
+            'params' : {}
+        };
+        document.write('<scr' + 'ipt type="text/javascript" src="http' + (location.protocol === 'https:' ? 's' : '') + '://www.highperformancedformats.com/e9e525fcb9df99bce127b9be7b16b177/invoke.js"></scr' + 'ipt>');
+        `;
+        div.current.appendChild(script);
     }, []);
 
-    return <div id="345822648" />;
+    return <div ref={div} />;
 };
