@@ -54,7 +54,7 @@ function App() {
         });
       });
 
-      presentation.writeFile({fileName: 'FromImages.pptx'}).then(() => {
+      presentation.writeFile({fileName: 'AutoPPT Export.pptx'}).then(() => {
         setLoading(false);
       });
     }, 0);
